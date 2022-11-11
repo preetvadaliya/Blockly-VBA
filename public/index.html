@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockly | VBA</title>
+  <style>
+    *,
+    *::after,
+    *::before {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: stretch;
+      padding: 16px;
+    }
+
+    .code-box {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      font-family: monospace;
+      color: #212121;
+      width: 40%;
+      font-size: 18px;
+    }
+
+    .title {
+      font-family: monospace;
+      color: #212121;
+      text-align: center;
+      padding: 16px 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div style="width: 60%" id="blockly-div"></div>
+    <div class="code-box">
+      <h1 class="title">CODE</h1>
+      <hr />
+      <pre id="code-pre"></pre>
+    </div>
+  </div>
+
+  <!-- Toolbox -->
+  <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+    <category name="Controls">
+      <block type="controls_if_else">
+      </block>
+    </category>
+    <category name="Logics">
+      <block type="logics_true_false">
+        <field name="OP">True</field>
+      </block>
+      <block type="logics_true_false">
+        <field name="OP">False</field>
+      </block>
+      <block type="logics_not">
+      </block>
+      <block type="logics_operators">
+        <field name="OP">Imp</field>
+      </block>
+      <block type="logics_operators">
+        <field name="OP">And</field>
+      </block>
+      <block type="logics_operators">
+        <field name="OP">Or</field>
+      </block>
+      <block type="logics_operators">
+        <field name="OP">Xor</field>
+      </block>
+      <block type="logics_operators_2">
+        <field name="OP">Eqv</field>
+      </block>
+      <block type="logics_operators_2">
+        <field name="OP">Is</field>
+      </block>
+      <block type="logics_operators_2">
+        <field name="OP">Like</field>
+      </block>
+      <block type="logics_operators_3">
+        <field name="OP">&lt;</field>
+      </block>
+      <block type="logics_operators_3">
+        <field name="OP">&lt;=</field>
+      </block>
+      <block type="logics_operators_3">
+        <field name="OP">&gt;</field>
+      </block>
+      <block type="logics_operators_3">
+        <field name="OP">&gt;=</field>
+      </block>
+      <block type="logics_operators_3">
+        <field name="OP">=</field>
+      </block>
+      <block type="logics_operators_3">
+        <field name="OP">&lt;&gt;</field>
+      </block>
+    </category>
+    <category name="Maths">
+      <block type="maths_number">
+      </block>
+      <block type="maths_operators">
+        <field name="OP">+</field>
+      </block>
+      <block type="maths_operators">
+        <field name="OP">-</field>
+      </block>
+      <block type="maths_operators">
+        <field name="OP">*</field>
+      </block>
+      <block type="maths_operators">
+        <field name="OP">/</field>
+      </block>
+      <block type="maths_operators">
+        <field name="OP">^</field>
+      </block>
+      <block type="maths_trigonometry">
+        <field name="OP">Sin</field>
+      </block>
+      <block type="maths_trigonometry">
+        <field name="OP">Cos</field>
+      </block>
+      <block type="maths_trigonometry">
+        <field name="OP">Tan</field>
+      </block>
+      <block type="maths_int_fix">
+        <field name="OP">Int</field>
+      </block>
+      <block type="maths_int_fix">
+        <field name="OP">Fix</field>
+      </block>
+      <block type="maths_abs_sgn_exp_sqr_log">
+        <field name="OP">Abs</field>
+      </block>
+      <block type="maths_abs_sgn_exp_sqr_log">
+        <field name="OP">Sgn</field>
+      </block>
+      <block type="maths_abs_sgn_exp_sqr_log">
+        <field name="OP">Exp</field>
+      </block>
+      <block type="maths_abs_sgn_exp_sqr_log">
+        <field name="OP">Sqr</field>
+      </block>
+      <block type="maths_abs_sgn_exp_sqr_log">
+        <field name="OP">Log</field>
+      </block>
+    </category>
+    <category name="Variables">
+      <block type="variables_variable_dec">
+      </block>
+      <block type="variables_variable_set">
+      </block>
+      <block type="variables_variable_get">
+      </block>
+    </category>
+  </xml>
+
+  <!-- JS -->
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+  <script src="../src/blocks/controls.js"></script>
+  <script src="../src/blocks/logics.js"></script>
+  <script src="../src/blocks/maths.js"></script>
+  <script src="../src/blocks/variables.js"></script>
+  <script>
+    var toolbox = document.getElementById('toolbox');
+    var options = {
+      toolbox: toolbox,
+      collapse: true,
+      comments: true,
+      disable: true,
+      maxBlocks: Infinity,
+      trashcan: true,
+      horizontalLayout: false,
+      toolboxPosition: 'start',
+      css: true,
+      media: 'https://blockly-demo.appspot.com/static/media/',
+      rtl: false,
+      scrollbars: true,
+      sounds: true,
+      oneBasedIndex: true,
+      renderer: 'geras',
+    };
+    var workspace = Blockly.inject('blockly-div', options);
+
+    // VBA GENERATOR
+    Blockly.VBA = new Blockly.Generator('VBA');
+    Blockly.VBA.ORDER_NONE = 99;
+    Blockly.VBA.ORDER_ATOMIC = 0;
+    Blockly.VBA.scrub_ = function (block, code, opt_thisOnly) {
+      const nextBlock =
+        block.nextConnection && block.nextConnection.targetBlock();
+      if (nextBlock && !opt_thisOnly) {
+        return code + '' + Blockly.VBA.blockToCode(nextBlock)
+      }
+      return code;
+    };
+
+    // GENERATE CODE
+    function myUpdateFunction(event) {
+      let code = Blockly.VBA.workspaceToCode(workspace);
+      document.getElementById('code-pre').innerText = code;
+    }
+    workspace.addChangeListener(myUpdateFunction);
+  </script>
+  <script src="../src/generators/controls.js"></script>
+  <script src="../src/generators/logics.js"></script>
+  <script src="../src/generators/maths.js"></script>
+  <script src="../src/generators/variables.js"></script>
+</body>
+
+</html>
